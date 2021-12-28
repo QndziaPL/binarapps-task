@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react"
+import LoginScreen from "./components/LoginScreen/LoginScreen"
+import { SingleQuestion } from "./types/types"
+import { mockQuestions } from "./mocks/mocks"
+import SingleStage from "./components/SingleStage/SingleStage"
+import FinishScreen from "./components/FinishScreen/FinishScreen"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const [name, setName] = useState<string>()
+
+  const [question, setQuestion] = useState<SingleQuestion>(
+    mockQuestions[Math.floor(Math.random() * mockQuestions.length)],
+  )
+  const [finished, setFinished] = useState(false)
+  const [score, setScore] = useState<number>(0)
+
+  useEffect(() => {
+    setRandomQuestion()
+  }, [])
+
+  const setRandomQuestion = () => {
+    const question =
+      mockQuestions[Math.floor(Math.random() * mockQuestions.length)]
+    setQuestion(question)
+  }
+
+  const resetGame = () => {
+    setRandomQuestion()
+    setScore(0)
+    setFinished(false)
+  }
+
+  const finishGame = (score: number) => {
+    setScore(score)
+    setFinished(true)
+  }
+
+  if (!name) return <LoginScreen pickName={setName} />
+
+  if (!finished)
+    return <SingleStage stageData={question} finishGame={finishGame} />
+
+  return <FinishScreen name={name} score={score} resetGame={resetGame} />
 }
 
-export default App;
+export default App
