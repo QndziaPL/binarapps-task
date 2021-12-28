@@ -7,10 +7,7 @@ import {
 } from "./SingleStage.styled"
 import SingleWord from "../SingleWord/SingleWord"
 import { Button } from "antd"
-import { randomSpacing } from "../../helpers/helpers"
-
-const firstLetterUppercase = (str: string) =>
-  str.charAt(0).toUpperCase() + str.slice(1)
+import { firstLetterUppercase, randomSpacing } from "../../helpers/helpers"
 
 interface Props {
   stageData: SingleQuestion
@@ -36,7 +33,7 @@ const SingleStage: FC<Props> = ({
     const missedCorrect = good_words.length - correct
 
     setScore(correct * 2 - (wrong + missedCorrect))
-  }, [pickedWords])
+  }, [pickedWords, good_words])
 
   const wordsWithSpacings = useMemo(
     () => all_words.map((word) => ({ word, spacing: randomSpacing() })),

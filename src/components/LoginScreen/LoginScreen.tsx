@@ -1,10 +1,5 @@
 import React, { FC, useState } from "react"
-import {
-  LoginScreenStyled,
-  PlayButton,
-  StyledInput,
-  Title,
-} from "./LoginScreen.styled"
+import { LoginScreenStyled, StyledInput, Title } from "./LoginScreen.styled"
 import { Button } from "antd"
 
 interface Props {

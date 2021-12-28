@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react"
 import LoginScreen from "./components/LoginScreen/LoginScreen"
 import { SingleQuestion } from "./types/types"
-import { mockQuestions } from "./mocks/mocks"
 import SingleStage from "./components/SingleStage/SingleStage"
 import FinishScreen from "./components/FinishScreen/FinishScreen"
+import { pickRandomQuestion } from "./helpers/helpers"
 
 const App = () => {
   const [name, setName] = useState<string>()
 
-  const [question, setQuestion] = useState<SingleQuestion>(
-    mockQuestions[Math.floor(Math.random() * mockQuestions.length)],
-  )
+  const [question, setQuestion] = useState<SingleQuestion>(pickRandomQuestion())
   const [finished, setFinished] = useState(false)
   const [score, setScore] = useState<number>(0)
 
@@ -19,9 +17,7 @@ const App = () => {
   }, [])
 
   const setRandomQuestion = () => {
-    const question =
-      mockQuestions[Math.floor(Math.random() * mockQuestions.length)]
-    setQuestion(question)
+    setQuestion(pickRandomQuestion())
   }
 
   const resetGame = () => {
